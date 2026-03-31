@@ -1,592 +1,495 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CERVA Inversiones | Wyndham Garden Mérida</title>
+    <title>Citrus Patrimonial | Oportunidad de Inversión Agrícola</title>
+    <meta name="description" content="Invierta en el Oro Verde de Yucatán con la asesoría estratégica de Paola Maas. Asegure un activo tangible con rendimientos superiores.">
     
-    <!-- Speed Optimization: Preload Hero Image -->
-    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80">
-    
-    <!-- Tailwind CSS via CDN -->
+    <!-- Preload Hero Image for faster LCP -->
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1596733430284-f743706014a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80">
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+
+    <!-- Tailwind CSS (CDN for standalone file) -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        forest: '#1f3027',
+                        gold: '#bb9b54',
+                        goldHover: '#a68848'
+                    },
+                    fontFamily: {
+                        sans: ['system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
 
+    <!-- Custom CSS for Native Animations -->
     <style>
-        /* Custom Styles & Native Animations for Speed */
-        :root {
-            --primary: #114363;
-            --accent: #f59e0b;
-        }
+        ::selection { background-color: #bb9b54; color: #ffffff; }
         
-        body {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+        /* CSS Animations based on IntersectionObserver */
+        .anim-fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease-out, transform 0.7s ease-out; }
+        .anim-slide-left { opacity: 0; transform: translateX(-40px); transition: opacity 0.7s ease-out, transform 0.7s ease-out; }
+        .anim-slide-right { opacity: 0; transform: translateX(40px); transition: opacity 0.7s ease-out, transform 0.7s ease-out; }
+        
+        .anim-fade-up.visible, .anim-slide-left.visible, .anim-slide-right.visible {
+            opacity: 1; transform: translate(0);
         }
 
-        /* Native Scroll Behavior */
-        html {
-            scroll-behavior: smooth;
-        }
+        /* Delay utilities */
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
 
-        /* Intersection Observer Fade-In Classes */
-        .fade-in-section {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-            will-change: opacity, transform;
-        }
-        .fade-in-section.is-visible {
-            opacity: 1;
-            transform: none;
-        }
-
-        /* Custom Range Slider Styling */
-        input[type=range] {
-            -webkit-appearance: none;
-            width: 100%;
-            background: transparent;
-        }
+        /* Range Slider Styling */
         input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            height: 24px;
-            width: 24px;
+            appearance: none;
+            width: 20px; height: 20px;
+            background: #bb9b54;
             border-radius: 50%;
-            background: var(--accent);
             cursor: pointer;
-            margin-top: -8px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
-        input[type=range]::-webkit-slider-runnable-track {
-            width: 100%;
-            height: 8px;
+        input[type=range]::-moz-range-thumb {
+            width: 20px; height: 20px;
+            background: #bb9b54;
+            border-radius: 50%;
             cursor: pointer;
-            background: #e5e7eb;
-            border-radius: 4px;
         }
     </style>
 </head>
-<body class="font-sans text-gray-800 bg-gray-50 min-h-screen selection:bg-[#f59e0b] selection:text-[#114363]">
+<body class="bg-gray-50 text-gray-900 antialiased overflow-x-hidden">
 
-    <!-- 1. HERO SECTION (Above the Fold) -->
-    <section class="relative bg-[#114363] text-white overflow-hidden">
-        <div class="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80')] bg-cover bg-center mix-blend-overlay" fetchpriority="high"></div>
-        <div class="absolute inset-0 bg-gradient-to-b from-[#114363]/90 to-[#114363]"></div>
-        
-        <div class="relative max-w-6xl mx-auto px-4 pt-24 pb-32 sm:px-6 lg:px-8 flex flex-col items-center text-center">
-            <div class="fade-in-section mb-6">
-                <span class="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-semibold bg-white/10 text-[#f59e0b] uppercase tracking-wider border border-[#f59e0b]/30">
-                    <i data-lucide="star" class="w-4 h-4 mr-2 fill-current"></i> 
-                    CERVA Inversiones Presenta
-                </span>
+    <!-- HEADER -->
+    <header class="fixed top-0 w-full bg-forest z-50 shadow-xl border-b border-gold/20">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <!-- Leaf SVG -->
+                <svg class="text-gold w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                <span class="text-white font-bold text-lg tracking-wider">CITRUS<span class="font-light">PATRIMONIAL</span></span>
             </div>
-            
-            <h1 class="fade-in-section text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
-                Invierta en el Hotel con Mayor <br class="hidden sm:block"/>
-                <span class="text-[#f59e0b]">Demanda Proyectada de Mérida</span>
-            </h1>
-            
-            <p class="fade-in-section mt-4 text-xl sm:text-2xl max-w-3xl text-gray-300 font-light mb-10">
-                Obtenga rentas mensuales de por vida con el respaldo de la marca global Wyndham. Inicie con solo el <strong class="text-white">15% de enganche</strong> y <strong class="text-white">48 meses sin intereses</strong>. $0 esfuerzo operativo.
-            </p>
-            
-            <div class="fade-in-section flex flex-col sm:flex-row gap-4 w-full justify-center">
-                <a href="#calculator-section" class="flex items-center justify-center px-8 py-4 text-lg font-bold rounded-lg text-[#114363] bg-[#f59e0b] hover:bg-yellow-400 transition-all shadow-lg hover:shadow-yellow-500/30 transform hover:-translate-y-1">
-                    Calcula tus rendimientos
-                    <i data-lucide="trending-up" class="ml-2 w-5 h-5"></i>
-                </a>
-                <a href="#contact-section" class="flex items-center justify-center px-8 py-4 text-lg font-bold rounded-lg text-white border-2 border-white/20 hover:bg-white/10 transition-all">
-                    Contactar a un Asesor
-                    <i data-lucide="chevron-right" class="ml-2 w-5 h-5"></i>
-                </a>
+            <div class="hidden md:block text-sm text-gray-300">
+                Asesoría Privada: <span class="text-gold font-semibold">Paola Maas</span>
             </div>
-
-            <div class="fade-in-section mt-12 flex items-center justify-center space-x-6 text-sm text-gray-400">
-                <div class="flex items-center"><i data-lucide="shield-check" class="w-5 h-5 mr-2 text-[#f59e0b]"></i> Contrato a 10 años</div>
-                <div class="flex items-center"><i data-lucide="clock" class="w-5 h-5 mr-2 text-[#f59e0b]"></i> Preventa Fase 1</div>
-            </div>
+            <a href="#cta" class="bg-gold hover:bg-goldHover text-white px-4 py-2 rounded-full text-sm font-bold transition-all transform hover:scale-105 flex items-center">
+                Proyectar Inversión 
+                <!-- ChevronRight SVG -->
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </a>
         </div>
-    </section>
+    </header>
 
-    <!-- 2. THE LOCATION ADVANTAGE -->
-    <section class="py-20 bg-white">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                <div class="fade-in-section relative rounded-2xl overflow-hidden shadow-2xl group">
-                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80" loading="lazy" alt="Ubicación Mérida" class="w-full h-[500px] object-cover transition-transform duration-700 group-hover:scale-105" />
-                    <div class="absolute inset-0 bg-gradient-to-t from-[#114363]/90 to-transparent flex flex-col justify-end p-8">
-                        <div class="flex items-center text-[#f59e0b] mb-2">
-                            <i data-lucide="map-pin" class="w-6 h-6 mr-2"></i>
-                            <span class="font-bold text-lg">Mérida, Yucatán</span>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white">Zona Norte Premium</h3>
-                    </div>
-                </div>
-
-                <div class="fade-in-section">
-                    <h2 class="text-3xl sm:text-4xl font-bold text-[#114363] mb-6">
-                        Ubicación Estratégica: Su Garantía de <span class="text-[#f59e0b]">Ocupación Constante</span>
-                    </h2>
-                    <p class="text-lg text-gray-600 mb-8 leading-relaxed">
-                        El proyecto Wyndham Garden Consulado está situado en la zona de mayor plusvalía y flujo corporativo de la ciudad. Una ubicación diseñada milimétricamente para capturar el mercado de turismo de negocios y visados.
-                    </p>
-                    
-                    <ul class="space-y-6">
-                        <li class="flex items-start">
-                            <div class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-[#114363]/5 text-[#114363]">
-                                <i data-lucide="building" class="w-6 h-6"></i>
-                            </div>
-                            <div class="ml-4">
-                                <h4 class="text-xl font-bold text-gray-900">Frente al Nuevo Consulado de EE.UU.</h4>
-                                <p class="mt-1 text-gray-500">Flujo diario garantizado de miles de personas gestionando trámites, requiriendo hospedaje ejecutivo inmediato.</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start">
-                            <div class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-[#114363]/5 text-[#114363]">
-                                <i data-lucide="briefcase" class="w-6 h-6"></i>
-                            </div>
-                            <div class="ml-4">
-                                <h4 class="text-xl font-bold text-gray-900">Corredor Vía Montejo & Plaza Harbor</h4>
-                                <p class="mt-1 text-gray-500">A pasos del centro corporativo y comercial más exclusivo del sureste mexicano.</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+    <!-- HERO SECTION -->
+    <section class="relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden bg-forest">
+        <!-- Background Image Overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1596733430284-f743706014a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" alt="Campos de Limón" class="w-full h-full object-cover opacity-20 mix-blend-overlay">
+            <div class="absolute inset-0 bg-gradient-to-b from-forest/80 to-forest"></div>
         </div>
-    </section>
 
-    <!-- 3. INTERACTIVE YIELD CALCULATOR -->
-    <section id="calculator-section" class="py-24 bg-[#114363] text-white relative overflow-hidden">
-        <div class="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-[800px] h-[800px] rounded-full bg-white/5 blur-3xl pointer-events-none"></div>
-
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="fade-in-section text-center mb-12">
-                <h2 class="text-3xl sm:text-4xl font-bold mb-4">Proyecte su Patrimonio</h2>
-                <p class="text-xl text-gray-300">Calcule sus ingresos pasivos estimados a través de nuestro modelo de Pool de Rentas.</p>
-            </div>
-
-            <div class="fade-in-section bg-white rounded-3xl p-8 shadow-2xl text-gray-800">
-                <div class="text-center mb-8">
-                    <p class="text-sm font-bold text-gray-500 uppercase tracking-wide">Valor Total de Inversión</p>
-                    <div class="text-4xl font-black text-[#114363]">
-                        $<span id="total-investment-display">240,000</span> <span class="text-lg text-gray-500 font-normal">MXN</span>
-                    </div>
-                    <p class="text-sm text-gray-500 mt-1">($240,000 MXN por acción)</p>
+        <div class="max-w-6xl mx-auto px-4 relative z-10">
+            <div class="text-center max-w-4xl mx-auto anim-fade-up">
+                <div class="inline-block bg-gold/20 border border-gold/50 text-gold px-4 py-1.5 rounded-full text-sm font-semibold tracking-wide mb-6 uppercase">
+                    Oportunidad de Inversión Respaldada
                 </div>
-
-                <div class="mb-8">
-                    <label class="block text-sm font-bold text-gray-500 uppercase tracking-wide mb-4">
-                        Número de Acciones a Adquirir: <span id="shares-count-display" class="text-[#114363] text-2xl font-black ml-2">1</span>
-                    </label>
-                    <input 
-                        type="range" 
-                        id="shares-slider"
-                        min="1" 
-                        max="12" 
-                        value="1" 
-                    />
-                    <div class="flex justify-between text-xs font-bold text-gray-400 mt-2">
-                        <span>1 Acción</span>
-                        <span>12 Acciones (Límite)</span>
-                    </div>
-                </div>
-
-                <div class="mb-8">
-                    <label class="block text-sm font-bold text-gray-500 uppercase tracking-wide mb-4 text-center">
-                        Escenario de Ocupación
-                    </label>
-                    <div class="flex flex-col sm:flex-row justify-center gap-4" id="scenario-buttons">
-                        <button class="scenario-btn px-6 py-3 rounded-xl font-bold border-2 transition-colors bg-transparent text-gray-500 border-gray-200 hover:border-[#114363]" data-scenario="0.11">
-                            Conservador (11%)
-                        </button>
-                        <button class="scenario-btn px-6 py-3 rounded-xl font-bold border-2 transition-colors bg-[#f59e0b] text-[#114363] border-[#f59e0b]" data-scenario="0.13">
-                            Medio (13%)
-                        </button>
-                        <button class="scenario-btn px-6 py-3 rounded-xl font-bold border-2 transition-colors bg-transparent text-gray-500 border-gray-200 hover:border-green-600" data-scenario="0.16">
-                            Alto (16%)
-                        </button>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                    <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
-                        <div class="flex items-center text-gray-500 mb-2">
-                            <i data-lucide="trending-up" class="w-5 h-5 mr-2"></i>
-                            <span class="font-semibold">Enganche Requerido (15%)</span>
-                        </div>
-                        <div class="text-3xl font-black text-[#114363]">
-                            $<span id="down-payment-display">36,000</span> <span class="text-sm font-normal text-gray-500">MXN</span>
-                        </div>
-                        <p class="text-sm text-[#f59e0b] font-semibold mt-2">+ 48 meses sin intereses</p>
-                    </div>
-
-                    <div class="bg-[#114363]/5 rounded-2xl p-6 border border-[#114363]/10">
-                        <div class="flex items-center text-gray-500 mb-2">
-                            <i data-lucide="check-circle" class="w-5 h-5 mr-2 text-green-600"></i>
-                            <span class="font-semibold">Rendimiento Anual Proyectado</span>
-                        </div>
-                        <div class="text-3xl font-black text-green-600">
-                            $<span id="annual-yield-display">31,200</span> <span class="text-sm font-normal text-gray-500">MXN</span>
-                        </div>
-                        <p class="text-sm text-gray-500 mt-2 font-medium">Escenario del <span id="scenario-text-display">13</span>% anual estimado</p>
-                    </div>
-                </div>
-
-                <div class="text-center pt-4 border-t border-gray-100">
-                    <a href="#contact-section" class="inline-flex items-center justify-center px-8 py-4 text-lg font-bold rounded-lg text-white bg-[#114363] hover:bg-blue-900 transition-all shadow-lg hover:shadow-blue-900/30 transform hover:-translate-y-1 w-full sm:w-auto">
-                        Deseo Invertir Ahora
-                        <i data-lucide="arrow-right" class="ml-2 w-5 h-5"></i>
+                <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-6">
+                    Invierta en el Oro Verde de Yucatán: <br/>
+                    <span class="text-gold">Tierra que Produce y Exporta</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
+                    Únase a Citrus Patrimonial con la asesoría estratégica de <strong class="text-white">Paola Maas</strong>. Asegure un activo tangible, 100% gestionado por expertos, con rendimientos superiores al sector inmobiliario tradicional.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="#calculator" class="w-full sm:w-auto bg-gold hover:bg-goldHover text-white px-8 py-4 rounded-full text-lg font-bold transition-all shadow-[0_0_20px_rgba(187,155,84,0.4)] hover:shadow-[0_0_30px_rgba(187,155,84,0.6)] flex justify-center items-center">
+                        Calcular Mis Ganancias 
+                        <!-- TrendingUp SVG -->
+                        <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                    </a>
+                    <a href="#cta" class="w-full sm:w-auto bg-transparent border border-white text-white hover:bg-white/10 px-8 py-4 rounded-full text-lg font-bold transition-all flex justify-center items-center">
+                        Agendar Sesión Privada
                     </a>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 4. THE OFFER STACK -->
-    <section class="py-24 bg-gray-50">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="fade-in-section text-center mb-16">
-                <h2 class="text-3xl sm:text-4xl font-bold text-[#114363] mb-4">
-                    La Oferta <span class="text-[#f59e0b]">"Wyndham Garden"</span>
-                </h2>
-                <p class="text-xl text-gray-600">Lo que obtiene al invertir hoy con CERVA Inversiones.</p>
-            </div>
-
-            <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
-                <div class="p-8 sm:p-12">
-                    <ul class="space-y-6">
-                        <li class="fade-in-section flex items-center justify-between pb-6 border-b border-gray-100">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-green-100 flex items-center justify-center mr-4">
-                                    <i data-lucide="check-circle" class="w-5 h-5 text-green-600"></i>
-                                </div>
-                                <span class="text-lg font-bold text-gray-800">Título de Propiedad Vitalicio (Acción del Hotel)</span>
-                            </div>
-                            <span class="hidden sm:inline-block px-3 py-1 bg-gray-100 text-gray-600 text-sm font-bold rounded-full">Activo Tangible</span>
-                        </li>
-                        <li class="fade-in-section flex items-center justify-between pb-6 border-b border-gray-100">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-green-100 flex items-center justify-center mr-4">
-                                    <i data-lucide="check-circle" class="w-5 h-5 text-green-600"></i>
-                                </div>
-                                <span class="text-lg font-bold text-gray-800">Pool de Rentas Mensual (11% - 16% Anual Estimado)</span>
-                            </div>
-                            <span class="hidden sm:inline-block px-3 py-1 bg-gray-100 text-gray-600 text-sm font-bold rounded-full">Flujo de Efectivo</span>
-                        </li>
-                        <li class="fade-in-section flex items-center justify-between pb-6 border-b border-gray-100">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-green-100 flex items-center justify-center mr-4">
-                                    <i data-lucide="check-circle" class="w-5 h-5 text-green-600"></i>
-                                </div>
-                                <span class="text-lg font-bold text-gray-800">Acceso a la App WONDER para Monitoreo 24/7</span>
-                            </div>
-                            <span class="hidden sm:inline-block px-3 py-1 bg-gray-100 text-gray-600 text-sm font-bold rounded-full">Tecnología Exclusiva</span>
-                        </li>
-                        <li class="fade-in-section flex items-center justify-between pb-6 border-b border-gray-100">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-green-100 flex items-center justify-center mr-4">
-                                    <i data-lucide="check-circle" class="w-5 h-5 text-green-600"></i>
-                                </div>
-                                <span class="text-lg font-bold text-gray-800">Membresía de Club Vacacional Wyndham de Regalo</span>
-                            </div>
-                            <span class="hidden sm:inline-block px-3 py-1 bg-gray-100 text-gray-600 text-sm font-bold rounded-full">Bono Especial</span>
-                        </li>
-                        <li class="fade-in-section flex items-center justify-between">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-green-100 flex items-center justify-center mr-4">
-                                    <i data-lucide="check-circle" class="w-5 h-5 text-green-600"></i>
-                                </div>
-                                <span class="text-lg font-bold text-gray-800">Inversión 100% heredable y de libre venta si decide liquidar su posición</span>
-                            </div>
-                            <span class="hidden sm:inline-block px-3 py-1 bg-gray-100 text-gray-600 text-sm font-bold rounded-full">Flexibilidad</span>
-                        </li>
-                    </ul>
-                    
-                    <div class="mt-12 p-8 bg-[#114363] rounded-2xl text-center">
-                        <p class="text-white text-xl font-light mb-2">Inversión respaldada por marca hotelera con presencia mundial.</p>
-                        <h3 class="text-3xl sm:text-4xl font-black text-[#f59e0b]">
-                            Riesgo Operativo: $0.00
-                        </h3>
+                
+                <div class="mt-12 flex justify-center items-center space-x-6 text-gray-400 text-sm">
+                    <div class="flex items-center">
+                        <!-- ShieldCheck SVG -->
+                        <svg class="w-4 h-4 mr-1 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        Propiedad Privada
+                    </div>
+                    <div class="flex items-center">
+                        <!-- Globe SVG -->
+                        <svg class="w-4 h-4 mr-1 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Mercado de Exportación
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 5. TRUST & AMENITY GALLERY -->
+    <!-- THE POWER OF AGRO-INVESTMENT -->
     <section class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="fade-in-section text-center mb-16">
-                <h2 class="text-3xl sm:text-4xl font-bold text-[#114363] mb-4">
-                    Calidad <span class="text-[#f59e0b]">4 Estrellas</span> Internacional
-                </h2>
-                <p class="text-xl text-gray-600">Amenidades diseñadas para garantizar la máxima tarifa promedio diaria (ADR).</p>
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16 anim-fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold text-forest mb-4">¿Por qué los Fondos de Inversión Apuestan por el Limón Persa?</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Elimine el riesgo de la volatilidad financiera. La tierra agrícola es un activo resiliente con demanda global garantizada.</p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Gallery Items -->
-                <div class="fade-in-section group relative h-80 rounded-2xl overflow-hidden cursor-pointer shadow-lg">
-                    <img src="https://images.unsplash.com/photo-1566404791732-2d115e1215b6?auto=format&fit=crop&q=80" loading="lazy" alt="Rooftop Bar Exclusivo" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-6">
-                        <h4 class="text-white font-bold text-xl">Rooftop Bar Exclusivo</h4>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-gray-50 p-8 rounded-2xl border border-gray-100 hover:border-gold/30 hover:shadow-lg transition-all anim-fade-up delay-100">
+                    <div class="bg-white w-16 h-16 rounded-full flex items-center justify-center shadow-sm mb-6">
+                        <svg class="w-10 h-10 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </div>
+                    <h3 class="text-xl font-bold text-forest mb-3">Demanda Global Acelerada</h3>
+                    <p class="text-gray-600">El consumo en EE.UU. crece exponencialmente. Nuestro enfoque es 100% calidad de exportación en moneda fuerte.</p>
                 </div>
-                <div class="fade-in-section group relative h-80 rounded-2xl overflow-hidden cursor-pointer shadow-lg">
-                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80" loading="lazy" alt="Business Center 24/7" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-6">
-                        <h4 class="text-white font-bold text-xl">Business Center 24/7</h4>
+                <!-- Card 2 -->
+                <div class="bg-gray-50 p-8 rounded-2xl border border-gray-100 hover:border-gold/30 hover:shadow-lg transition-all anim-fade-up delay-200">
+                    <div class="bg-white w-16 h-16 rounded-full flex items-center justify-center shadow-sm mb-6">
+                        <svg class="w-10 h-10 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
                     </div>
+                    <h3 class="text-xl font-bold text-forest mb-3">Protección Contra Inflación</h3>
+                    <p class="text-gray-600">El valor de la tierra y los alimentos históricamente supera la inflación, blindando su patrimonio de forma tangible.</p>
                 </div>
-                <div class="fade-in-section group relative h-80 rounded-2xl overflow-hidden cursor-pointer shadow-lg">
-                    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80" loading="lazy" alt="Gimnasio Equipado" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-6">
-                        <h4 class="text-white font-bold text-xl">Gimnasio Equipado</h4>
+                <!-- Card 3 -->
+                <div class="bg-gray-50 p-8 rounded-2xl border border-gray-100 hover:border-gold/30 hover:shadow-lg transition-all anim-fade-up delay-300">
+                    <div class="bg-white w-16 h-16 rounded-full flex items-center justify-center shadow-sm mb-6">
+                        <svg class="w-10 h-10 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
                     </div>
+                    <h3 class="text-xl font-bold text-forest mb-3">Cero Esfuerzo Operativo</h3>
+                    <p class="text-gray-600">Nos encargamos de la siembra, mantenimiento, cosecha y comercialización. Usted solo monitorea y recibe utilidades.</p>
                 </div>
-                <div class="fade-in-section group relative h-80 rounded-2xl overflow-hidden cursor-pointer shadow-lg">
-                    <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&q=80" loading="lazy" alt="Restaurante Signature" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-6">
-                        <h4 class="text-white font-bold text-xl">Restaurante Signature</h4>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- App WONDER Banner -->
-            <div class="fade-in-section mt-16 bg-[#114363] rounded-3xl p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between shadow-2xl">
-                 <div class="md:w-2/3 mb-8 md:mb-0">
-                     <h3 class="text-2xl sm:text-3xl font-bold text-white mb-4 flex items-center">
-                         <i data-lucide="smartphone" class="w-8 h-8 text-[#f59e0b] mr-3"></i>
-                         App WONDER: Transparencia Absoluta
-                     </h3>
-                     <p class="text-gray-300 text-lg">
-                         Monitoree la ocupación del hotel, el estatus de sus pagos y sus rendimientos mensuales en tiempo real directamente desde su smartphone. La tecnología elimina la incertidumbre.
-                     </p>
-                 </div>
-                 <div class="md:w-1/3 flex justify-center">
-                    <div class="w-48 h-64 bg-gray-800 rounded-2xl border-4 border-gray-700 shadow-2xl flex items-center justify-center relative overflow-hidden">
-                        <div class="absolute top-0 w-1/2 h-4 bg-gray-700 rounded-b-xl"></div>
-                        <div class="text-[#f59e0b] font-bold text-2xl">WONDER</div>
-                    </div>
-                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 6. FINAL URGENT CTA -->
-    <section id="contact-section" class="py-24 bg-[#f59e0b] relative">
-        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] mix-blend-overlay"></div>
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-            
-            <div class="fade-in-section inline-block bg-red-600 text-white font-black px-6 py-2 rounded-full uppercase tracking-widest mb-8 shadow-lg animate-pulse">
-                Cupo Estrictamente Limitado
-            </div>
-            
-            <h2 class="fade-in-section text-4xl sm:text-5xl font-black text-[#114363] mb-6">
-                Solo 12 Acciones Disponibles Por Habitación
-            </h2>
-            
-            <p class="fade-in-section text-xl text-[#114363]/80 font-medium mb-12">
-                No pierda la oportunidad de asegurar patrimonio generacional. Déjenos sus datos y un asesor especializado de CERVA Inversiones se pondrá en contacto con usted a la brevedad.
-            </p>
-            
-            <!-- FORMULARIO DE CONTACTO -->
-            <form id="lead-form" class="fade-in-section bg-white p-8 rounded-3xl shadow-2xl max-w-2xl mx-auto text-left">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">Nombre Completo</label>
-                        <input type="text" name="nombre" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#114363] focus:border-transparent outline-none" placeholder="Ej. Carlos Mendoza" />
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">Teléfono (WhatsApp)</label>
-                        <input type="tel" name="telefono" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#114363] focus:border-transparent outline-none" placeholder="+52 123 456 7890" />
-                    </div>
+    <!-- INTERACTIVE ROI CALCULATOR -->
+    <section id="calculator" class="py-20 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="bg-forest rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden anim-fade-up">
+                <!-- Decorative background element -->
+                <div class="absolute top-0 right-0 -mt-20 -mr-20 w-64 h-64 bg-gold rounded-full opacity-10 blur-3xl"></div>
+                
+                <div class="text-center mb-10 relative z-10">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Simulador de Rendimiento</h2>
+                    <p class="text-gold">Descubra el poder del interés compuesto agrícola.</p>
                 </div>
-                <div class="mb-6">
-                    <label class="block text-sm font-bold text-gray-700 mb-2">Correo Electrónico</label>
-                    <input type="email" name="email" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#114363] focus:border-transparent outline-none" placeholder="carlos@correo.com" />
-                </div>
-                <div class="mb-8">
-                    <label class="block text-sm font-bold text-gray-700 mb-2">¿Cuenta con el capital para el 15% de enganche? (Aprox. $36,000 MXN por acción)</label>
-                    <select name="enganche" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#114363] focus:border-transparent outline-none bg-white">
-                        <option value="">Seleccione una opción</option>
-                        <option value="si">Sí, cuento con el enganche</option>
-                        <option value="no">No, busco opciones de financiamiento</option>
-                        <option value="duda">Tengo dudas sobre los métodos de pago</option>
-                    </select>
-                </div>
-                <!-- Aquí es donde tu CRM (Hubspot, ActiveCampaign, etc.) interceptará los datos si cambias la URL del action -->
-                <button type="submit" class="w-full bg-[#114363] hover:bg-blue-900 text-white font-bold text-xl py-4 rounded-xl shadow-lg transition-colors flex items-center justify-center">
-                    Contactar a un Asesor <i data-lucide="arrow-right" class="ml-2 w-6 h-6"></i>
-                </button>
-                <p class="text-xs text-center text-gray-500 mt-4">
-                    Sus datos serán integrados de manera segura a nuestro CRM. Cero fricción, cero llamadas de spam.
-                </p>
-            </form>
 
+                <div class="bg-white/10 p-6 md:p-8 rounded-2xl backdrop-blur-sm relative z-10">
+                    <div class="mb-8">
+                        <label class="flex justify-between text-white font-semibold mb-4">
+                            <span>Número de Certificados de Plantación</span>
+                            <span class="text-gold text-xl font-bold" id="certCountDisplay">2</span>
+                        </label>
+                        <input type="range" id="certSlider" min="1" max="20" value="2" class="w-full h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer accent-gold">
+                        <div class="flex justify-between text-gray-400 text-xs mt-2">
+                            <span>1</span>
+                            <span>10</span>
+                            <span>20</span>
+                        </div>
+                    </div>
+
+                    <!-- Escenarios de Rendimiento -->
+                    <div class="mb-8">
+                        <p class="text-white font-semibold mb-4 text-left">Escenario de Rendimiento Anual</p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <button type="button" class="rate-btn bg-gold text-white border-gold py-3 rounded-xl text-sm font-bold transition-all border-2 shadow-lg" data-rate="0.18">
+                                Conservador (18%)
+                            </button>
+                            <button type="button" class="rate-btn bg-white/10 text-gray-300 border-transparent hover:bg-white/20 hover:border-gold/50 py-3 rounded-xl text-sm font-bold transition-all border-2" data-rate="0.20">
+                                Medio (20%)
+                            </button>
+                            <button type="button" class="rate-btn bg-white/10 text-gray-300 border-transparent hover:bg-white/20 hover:border-gold/50 py-3 rounded-xl text-sm font-bold transition-all border-2" data-rate="0.22">
+                                Alto (22%)
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-white p-6 rounded-xl text-center">
+                            <p class="text-gray-500 text-sm font-semibold uppercase tracking-wide mb-2">Inversión Inicial Estimada</p>
+                            <p class="text-3xl font-bold text-forest" id="totalInvDisplay">$620,000</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-gold to-goldHover p-6 rounded-xl text-center shadow-lg transform scale-105">
+                            <p class="text-white/90 text-sm font-semibold uppercase tracking-wide mb-2">Rendimiento Proyectado (5 Años)</p>
+                            <p class="text-3xl font-bold text-white" id="projReturnDisplay">$558,000</p>
+                        </div>
+                    </div>
+
+                    <p class="text-gray-400 text-xs text-center mb-6">
+                        * Las cifras son proyecciones ilustrativas basadas en históricos de producción y precio de exportación. No garantizan rendimientos futuros.
+                    </p>
+
+                    <div class="text-center">
+                        <a href="#cta" class="inline-block bg-white text-forest hover:bg-gray-100 px-8 py-3 rounded-full text-lg font-bold transition-all">
+                            Obtener Proyección Personalizada
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- THE GRAND SLAM STACK -->
+    <section class="py-20 bg-white overflow-hidden">
+        <div class="max-w-5xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2 anim-slide-left">
+                    <img src="campo-limon.jpg" alt="Operación Agrícola" loading="lazy" class="rounded-2xl shadow-xl object-cover h-full">
+                </div>
+                <div class="md:w-1/2 anim-slide-right">
+                    <h2 class="text-3xl md:text-4xl font-bold text-forest mb-6">Su Activo, Llave en Mano.</h2>
+                    <p class="text-gray-600 mb-8">No está comprando solo tierra. Está adquiriendo un sistema completo de producción diseñado para eliminar el riesgo operativo y maximizar sus utilidades.</p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-gold mr-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <span class="text-forest font-medium">Certificado de Plantación con Certeza Jurídica (Propiedad Privada)</span>
+                        </div>
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-gold mr-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <span class="text-forest font-medium">Gestión Agrícola 100% Profesional (Siembra, Riego, Mantenimiento)</span>
+                        </div>
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-gold mr-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <span class="text-forest font-medium">Acceso Directo a Cadenas de Exportación Internacionales</span>
+                        </div>
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-gold mr-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <span class="text-forest font-medium">Plataforma de Monitoreo y Transparencia Financiera</span>
+                        </div>
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-gold mr-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <span class="text-forest font-medium">Asesoría y Acompañamiento Personalizado por Paola Maas</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AUTHORITY & TRUST -->
+    <section class="py-20 bg-forest text-white">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <div class="anim-fade-up">
+                <p class="text-gold font-semibold tracking-wider uppercase mb-4">Respaldo y Solidez</p>
+                <h2 class="text-3xl md:text-4xl font-bold mb-12">Un Proyecto Validado por los Expertos</h2>
+                
+                <!-- Logos Mockup -->
+                <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 mb-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+                    <span class="text-2xl md:text-3xl font-serif font-bold tracking-tighter">MILENIO</span>
+                    <span class="text-2xl md:text-3xl font-sans font-bold italic">Expansión</span>
+                    <span class="text-2xl md:text-3xl font-serif font-bold uppercase tracking-widest">FORBES</span>
+                    <span class="text-xl md:text-2xl font-sans font-black tracking-tight">Dimes y Billetes</span>
+                </div>
+            </div>
+
+            <div class="bg-white/5 border border-white/10 rounded-3xl p-8 max-w-4xl mx-auto backdrop-blur-sm text-left flex flex-col md:flex-row items-center gap-8 anim-fade-up">
+                <div class="w-32 h-32 md:w-48 md:h-48 flex-shrink-0 rounded-full overflow-hidden border-4 border-gold">
+                    <img src="paola-maas.jpeg" alt="Paola Maas" loading="lazy" class="w-full h-full object-cover">
+                </div>
+                <div>
+                    <div class="flex items-center mb-2">
+                        <!-- Award SVG -->
+                        <svg class="text-gold w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                        <h3 class="text-2xl font-bold">Paola Maas</h3>
+                    </div>
+                    <p class="text-gold font-medium mb-4">Asesora en Inversiones & Especialista Patrimonial</p>
+                    <p class="text-gray-300 italic mb-4">"Mi objetivo no es venderle un lote, es construir junto a usted un flujo de ingresos pasivos sólido. Acompaño a cada inversionista desde la evaluación financiera hasta la entrega de sus primeras utilidades, asegurando que el ecosistema de Mérida trabaje a su favor."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA & SCARCITY -->
+    <section id="cta" class="py-24 bg-white relative overflow-hidden">
+        <!-- Decorative elements -->
+        <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-forest via-gold to-forest"></div>
+        
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="bg-gray-50 border-2 border-forest/10 rounded-3xl p-8 md:p-12 text-center shadow-2xl relative anim-fade-up">
+                <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-gold text-white px-6 py-2 rounded-full font-bold shadow-lg flex items-center">
+                    <!-- Clock SVG -->
+                    <svg class="w-5 h-5 mr-2 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Cierre de Etapa Próximo
+                </div>
+
+                <h2 class="text-3xl md:text-5xl font-extrabold text-forest mb-6 mt-6">
+                    Asegure su Lugar en <br/><span class="text-gold">Etapa Jaguar IV</span>
+                </h2>
+                
+                <div class="mb-8">
+                    <div class="flex justify-between text-sm font-bold text-gray-600 mb-2">
+                        <span>Certificados Disponibles</span>
+                        <span class="text-red-600">85% Suscrito</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-3">
+                        <div class="bg-red-600 h-3 rounded-full" style="width: 85%;"></div>
+                    </div>
+                </div>
+
+                <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+                    La ventana de oportunidad para beneficiarse de los precios de preventa actuales está a punto de cerrarse. Complete el formulario para recibir una <strong>Proyección Financiera</strong> y agendar una sesión estratégica.
+                </p>
+
+                <!-- Form starts here -->
+                <form id="leadForm" class="max-w-md mx-auto space-y-4 mb-8">
+                    <input type="text" id="name" placeholder="Nombre Completo" class="w-full px-5 py-4 rounded-xl border border-gray-300 focus:border-gold focus:ring-2 focus:ring-gold/20 outline-none transition-all" required>
+                    <input type="email" id="email" placeholder="Correo Electrónico" class="w-full px-5 py-4 rounded-xl border border-gray-300 focus:border-gold focus:ring-2 focus:ring-gold/20 outline-none transition-all" required>
+                    
+                    <div class="relative flex items-center">
+                        <span class="absolute left-4 text-gray-600 font-bold border-r border-gray-300 pr-2 pointer-events-none">+52</span>
+                        <input type="tel" id="phone" placeholder="Número de WhatsApp" class="w-full pl-[4.5rem] pr-5 py-4 rounded-xl border border-gray-300 focus:border-gold focus:ring-2 focus:ring-gold/20 outline-none transition-all" required>
+                    </div>
+
+                    <select id="budget" class="w-full px-5 py-4 rounded-xl border border-gray-300 focus:border-gold focus:ring-2 focus:ring-gold/20 outline-none transition-all bg-white text-gray-600" required>
+                        <option value="" disabled selected>¿Cuánto tiene presupuestado invertir?</option>
+                        <option value="310000">1 Certificado ($310,000 MXN)</option>
+                        <option value="620000">2 Certificados ($620,000 MXN)</option>
+                        <option value="930000">3 a 5 Certificados ($930k - $1.5M MXN)</option>
+                        <option value="1500000">Más de 5 Certificados (+ $1.5M MXN)</option>
+                        <option value="0">Aún evaluando presupuesto</option>
+                    </select>
+                    
+                    <button type="submit" class="w-full bg-forest hover:bg-[#2a4236] text-white px-8 py-4 rounded-xl text-lg font-bold transition-all shadow-lg flex justify-center items-center group">
+                        Solicitar Proyección Financiera 
+                        <!-- ChevronRight SVG -->
+                        <svg class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                </form>
+            </div>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="bg-gray-900 text-gray-400 py-8 text-center text-sm">
-        <p>© 2026 CERVA Inversiones. Especialistas en Activos de Alto Rendimiento.</p>
-        <p class="mt-2 text-xs opacity-60">Wyndham Garden Mérida Consulado es un proyecto de Smart Desarrollos. Imágenes con fines ilustrativos.</p>
+    <footer class="bg-forest text-white/60 py-8 text-center border-t border-white/10">
+        <div class="max-w-6xl mx-auto px-4">
+            <svg class="w-8 h-8 text-gold mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+            <p class="mb-2">© 2026 Paola Maas | Asesora en Inversiones. Todos los derechos reservados.</p>
+            <p class="text-xs max-w-2xl mx-auto">La información aquí presentada es de carácter ilustrativo. Las proyecciones financieras están basadas en análisis de mercado y no representan una garantía absoluta de rendimiento. Todo proyecto de inversión conlleva riesgos implícitos.</p>
+        </div>
     </footer>
 
-    <!-- WHATSAPP POPUP MODAL -->
-    <div id="whatsapp-popup" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-        <div class="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl relative text-center transform transition-all scale-95 opacity-0" id="popup-content">
-            <button type="button" id="close-popup" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 transition-colors">
-                <i data-lucide="x" class="w-6 h-6"></i>
-            </button>
-            
-            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <i data-lucide="check-circle" class="w-8 h-8 text-green-600"></i>
-            </div>
-            
-            <h3 class="text-2xl font-black text-[#114363] mb-4">¡Sus datos han sido registrados!</h3>
-            <p class="text-gray-600 mb-8">
-                Un asesor especializado se pondrá en contacto pronto. Mientras tanto, le invitamos a unirse a nuestro <strong>grupo exclusivo de WhatsApp para inversionistas</strong>, donde compartimos más oportunidades en pool de rentas para diversificar su portafolio.
-            </p>
-            
-            <a href="https://chat.whatsapp.com/F89TisCjUq7GR69m8gpv8C" target="_blank" rel="noreferrer" id="whatsapp-link" class="w-full inline-flex items-center justify-center px-6 py-4 font-bold text-white bg-green-500 hover:bg-green-600 rounded-xl transition-colors shadow-lg shadow-green-500/30">
-                <i data-lucide="smartphone" class="w-5 h-5 mr-2"></i>
-                Unirme al Grupo Exclusivo
-            </a>
-        </div>
-    </div>
-
-    <!-- MAIN LOGIC (Vanilla JS for ultra-fast execution) -->
+    <!-- INTERACTIVITY & LOGIC SCRIPTS -->
     <script>
-        // Inicializar iconos
-        lucide.createIcons();
-
-        // 1. Lógica de la Calculadora de Rendimientos
+        // 1. Calculator Logic
         document.addEventListener('DOMContentLoaded', () => {
-            const sharePrice = 240000;
-            let currentShares = 1;
-            let currentScenario = 0.13;
+            const certSlider = document.getElementById('certSlider');
+            const certCountDisplay = document.getElementById('certCountDisplay');
+            const totalInvDisplay = document.getElementById('totalInvDisplay');
+            const projReturnDisplay = document.getElementById('projReturnDisplay');
+            const rateButtons = document.querySelectorAll('.rate-btn');
+            
+            const pricePerCertificate = 310000;
+            let annualReturnRate = 0.18; // Default rate
 
-            // Elementos del DOM
-            const slider = document.getElementById('shares-slider');
-            const sharesDisplay = document.getElementById('shares-count-display');
-            const investmentDisplay = document.getElementById('total-investment-display');
-            const downPaymentDisplay = document.getElementById('down-payment-display');
-            const annualYieldDisplay = document.getElementById('annual-yield-display');
-            const scenarioTextDisplay = document.getElementById('scenario-text-display');
-            const scenarioButtons = document.querySelectorAll('.scenario-btn');
+            const formatCurrency = (value) => {
+                return new Intl.NumberFormat('es-MX', {
+                    style: 'currency',
+                    currency: 'MXN',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                }).format(value);
+            };
 
-            function updateCalculator() {
-                const totalInvestment = sharePrice * currentShares;
-                const downPayment = totalInvestment * 0.15;
-                const annualYield = totalInvestment * currentScenario;
+            const calculateReturns = () => {
+                const certificates = parseInt(certSlider.value);
+                const totalInvestment = certificates * pricePerCertificate;
+                const annualReturn = totalInvestment * annualReturnRate;
+                const fiveYearReturn = annualReturn * 5;
 
-                // Formateo de moneda
-                const formatMoney = (val) => val.toLocaleString('es-MX', { maximumFractionDigits: 0 });
+                certCountDisplay.textContent = certificates;
+                totalInvDisplay.textContent = formatCurrency(totalInvestment);
+                projReturnDisplay.textContent = formatCurrency(fiveYearReturn);
+            };
 
-                sharesDisplay.textContent = currentShares;
-                investmentDisplay.textContent = formatMoney(totalInvestment);
-                downPaymentDisplay.textContent = formatMoney(downPayment);
-                annualYieldDisplay.textContent = formatMoney(annualYield);
-                scenarioTextDisplay.textContent = (currentScenario * 100).toFixed(0);
-            }
-
-            // Listeners del Slider
-            slider.addEventListener('input', (e) => {
-                currentShares = parseInt(e.target.value);
-                updateCalculator();
-            });
-
-            // Listeners de Escenarios
-            scenarioButtons.forEach(btn => {
+            // Rate Buttons Logic
+            rateButtons.forEach(btn => {
                 btn.addEventListener('click', (e) => {
-                    currentScenario = parseFloat(btn.getAttribute('data-scenario'));
+                    // Actualizar la tasa
+                    annualReturnRate = parseFloat(e.currentTarget.getAttribute('data-rate'));
                     
-                    // Actualizar estilos de los botones
-                    scenarioButtons.forEach(b => {
-                        b.className = "scenario-btn px-6 py-3 rounded-xl font-bold border-2 transition-colors bg-transparent text-gray-500 border-gray-200 hover:border-[#114363]";
+                    // Reiniciar estilos de todos los botones
+                    rateButtons.forEach(b => {
+                        b.classList.remove('bg-gold', 'text-white', 'border-gold', 'shadow-lg');
+                        b.classList.add('bg-white/10', 'text-gray-300', 'border-transparent', 'hover:bg-white/20', 'hover:border-gold/50');
                     });
                     
-                    // Resaltar botón activo (colores condicionales según escenario)
-                    if(currentScenario === 0.11) {
-                        btn.className = "scenario-btn px-6 py-3 rounded-xl font-bold border-2 transition-colors bg-[#114363] text-white border-[#114363]";
-                    } else if (currentScenario === 0.13) {
-                        btn.className = "scenario-btn px-6 py-3 rounded-xl font-bold border-2 transition-colors bg-[#f59e0b] text-[#114363] border-[#f59e0b]";
-                    } else {
-                        btn.className = "scenario-btn px-6 py-3 rounded-xl font-bold border-2 transition-colors bg-green-600 text-white border-green-600";
-                    }
-
-                    updateCalculator();
+                    // Aplicar estilo activo al botón seleccionado
+                    e.currentTarget.classList.remove('bg-white/10', 'text-gray-300', 'border-transparent', 'hover:bg-white/20', 'hover:border-gold/50');
+                    e.currentTarget.classList.add('bg-gold', 'text-white', 'border-gold', 'shadow-lg');
+                    
+                    // Recalcular
+                    calculateReturns();
                 });
             });
 
-            // Inicializar
-            updateCalculator();
+            certSlider.addEventListener('input', calculateReturns);
+            calculateReturns(); // Initialize values on load
         });
 
-        // 2. Lógica de Intercepción del Formulario y PopUp
-        const form = document.getElementById('lead-form');
-        const popup = document.getElementById('whatsapp-popup');
-        const popupContent = document.getElementById('popup-content');
-        const closeBtn = document.getElementById('close-popup');
-        const whatsappLink = document.getElementById('whatsapp-link');
-
-        function showPopup() {
-            popup.classList.remove('hidden');
-            // Timeout pequeño para que funcione la transición CSS
-            setTimeout(() => {
-                popupContent.classList.remove('scale-95', 'opacity-0');
-                popupContent.classList.add('scale-100', 'opacity-100');
-            }, 10);
-        }
-
-        function hidePopup() {
-            popupContent.classList.remove('scale-100', 'opacity-100');
-            popupContent.classList.add('scale-95', 'opacity-0');
-            setTimeout(() => {
-                popup.classList.add('hidden');
-            }, 300);
-        }
-
-        form.addEventListener('submit', (e) => {
-            e.preventDefault(); // Evitamos recarga. Aquí tu CRM (ej. script de Hubspot) tomaría los datos.
+        // 2. Form Submit & Webhook & WhatsApp Redirect Logic
+        document.getElementById('leadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
             
-            // Simulación de envío a CRM
-            // const formData = new FormData(form);
-            // fetch('TU_WEBHOOK_DEL_CRM', { method: 'POST', body: formData });
+            // Capturar los valores del formulario
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const budget = document.getElementById('budget').value;
+
+            // Opcional para Meta CAPI:
+            // fbq('track', 'Lead', { value: budget, currency: 'MXN' });
+
+            // 1. Enviar datos al Webhook de Make.com
+            try {
+                await fetch('https://hook.us2.make.com/fplx0u5m29x0ywpaqxk48iny653j968n', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        nombre: name,
+                        correo: email,
+                        telefono: '+52' + phone,
+                        presupuesto: budget,
+                        origen: 'Landing Page Citrus Patrimonial'
+                    })
+                });
+            } catch (error) {
+                console.error('Error al enviar webhook a Make:', error);
+                // El error se ignora silenciosamente para no interrumpir el flujo del usuario hacia WhatsApp
+            }
+
+            // 2. Redirección directa a WhatsApp con mensaje personalizado
+            const mensaje = encodeURIComponent(`¡Hola Paola! Soy ${name}. Llené el formulario en la landing page y me gustaría agendar una sesión estratégica para recibir mi proyección financiera.`);
+            window.open(`https://wa.me/529997435444?text=${mensaje}`, '_blank');
+        });
+
+        // 3. Native Intersection Observer for fast scroll animations
+        document.addEventListener('DOMContentLoaded', () => {
+            const animatedElements = document.querySelectorAll('.anim-fade-up, .anim-slide-left, .anim-slide-right');
             
-            showPopup();
-            form.reset(); // Limpia el form
-        });
-
-        closeBtn.addEventListener('click', hidePopup);
-        whatsappLink.addEventListener('click', hidePopup); // Cerrar si da click al enlace
-        popup.addEventListener('click', (e) => {
-            if (e.target === popup) hidePopup(); // Cerrar clickeando afuera
-        });
-
-        // 3. Intersection Observer (Sustituto ultraligero de Framer Motion para el Fade-In)
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    observer.unobserve(entry.target); // Solo animar la primera vez
-                }
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target); // Stop observing once animated
+                    }
+                });
+            }, {
+                threshold: 0.1, // Trigger when 10% of element is visible
+                rootMargin: "0px 0px -50px 0px"
             });
-        }, observerOptions);
 
-        document.querySelectorAll('.fade-in-section').forEach(section => {
-            observer.observe(section);
+            animatedElements.forEach(el => observer.observe(el));
         });
-
     </script>
 </body>
 </html>
