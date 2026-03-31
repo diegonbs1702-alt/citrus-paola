@@ -62,6 +62,24 @@
             cursor: pointer;
         }
     </style>
+
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '834434029681370');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=834434029681370&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
 </head>
 <body class="bg-gray-50 text-gray-900 antialiased overflow-x-hidden">
 
@@ -356,6 +374,11 @@
                         <option value="1500000">Más de 5 Certificados (+ $1.5M MXN)</option>
                         <option value="0">Aún evaluando presupuesto</option>
                     </select>
+
+                    <!-- Campos Ocultos para Meta CAPI -->
+                    <input type="hidden" id="eventId">
+                    <input type="hidden" id="clientIp">
+                    <input type="hidden" id="userAgent">
                     
                     <button type="submit" class="w-full bg-forest hover:bg-[#2a4236] text-white px-8 py-4 rounded-xl text-lg font-bold transition-all shadow-lg flex justify-center items-center group">
                         Solicitar Proyección Financiera 
@@ -434,6 +457,24 @@
             calculateReturns(); // Initialize values on load
         });
 
+        // Generar Event ID y obtener Datos del Cliente para Meta CAPI
+        const generateEventId = () => 'lead_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        const currentEventId = generateEventId();
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // Asignar Event ID y User Agent al cargar
+            document.getElementById('eventId').value = currentEventId;
+            document.getElementById('userAgent').value = navigator.userAgent;
+            
+            // Obtener IP del cliente de forma asíncrona (No bloquea la carga de la página)
+            fetch('https://api.ipify.org?format=json')
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('clientIp').value = data.ip;
+                })
+                .catch(err => console.error('Error al obtener IP:', err));
+        });
+
         // 2. Form Submit & Webhook & WhatsApp Redirect Logic
         document.getElementById('leadForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -444,8 +485,15 @@
             const phone = document.getElementById('phone').value;
             const budget = document.getElementById('budget').value;
 
-            // Opcional para Meta CAPI:
-            // fbq('track', 'Lead', { value: budget, currency: 'MXN' });
+            // Capturar valores ocultos para la CAPI
+            const eventId = document.getElementById('eventId').value || currentEventId;
+            const clientIp = document.getElementById('clientIp').value;
+            const userAgent = document.getElementById('userAgent').value;
+
+            // 0. Disparar evento Pixel de Meta en el Front-End (Con EventID para deduplicar)
+            if (typeof fbq !== 'undefined') {
+                fbq('track', 'Lead', { value: budget, currency: 'MXN' }, { eventID: eventId });
+            }
 
             // 1. Enviar datos al Webhook de Make.com
             try {
@@ -459,7 +507,10 @@
                         correo: email,
                         telefono: '+52' + phone,
                         presupuesto: budget,
-                        origen: 'Landing Page Citrus Patrimonial'
+                        origen: 'Landing Page Citrus Patrimonial',
+                        eventId: eventId,
+                        clientIp: clientIp,
+                        userAgent: userAgent
                     })
                 });
             } catch (error) {
